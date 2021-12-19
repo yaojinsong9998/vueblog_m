@@ -1,13 +1,21 @@
 package com.vbg.controller;
 
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.vbg.common.dto.LoginDto;
 import com.vbg.common.lang.Result;
 import com.vbg.entity.User;
 import com.vbg.service.UserService;
+import com.vbg.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -33,4 +41,6 @@ public class UserController {
     public Result save(@Validated @RequestBody User user){
         return Result.succ(user);
     }
+
+
 }

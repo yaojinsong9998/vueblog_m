@@ -1,4 +1,4 @@
-package com.vbg.exception;
+package com.vbg.common.exception;
 
 import com.vbg.common.lang.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +28,20 @@ public class GlobalExceptionHandler {
         log.error("实体校验异常:----", e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
-        return Result.fail(e.getMessage());
+        return Result.fail(objectError.getDefaultMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e) {
         log.error("运行时异常:----", e);
+        return Result.fail(e.getMessage(),null);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public Result handler(IllegalArgumentException e) {
+        log.error("Assert异常:----", e);
         return Result.fail(e.getMessage(),null);
     }
 }
